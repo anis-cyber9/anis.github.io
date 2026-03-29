@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Anis F. — Site Personnel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Syncopate:wght@400;700&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg:         #0b0c0e;
+      --surface:    #111318;
+      --surface-2:  #181c23;
+      --border:     #1f2430;
+      --accent:     #7c9cbf;
+      --accent-dim: #3a5068;
+      --gold:       #b89a5a;
+      --text:       #d4d8e0;
+      --text-dim:   #636878;
+      --text-faint: #2e3240;
+      --font-title: 'Syncopate', sans-serif;
+      --font-body:  'Cormorant Garamond', serif;
+      --font-mono:  'DM Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 18px;
+      line-height: 1.7;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 999; opacity: 0.35;
+    }
+
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--accent-dim); border-radius: 2px; }
+
+    .page {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
+    /* ── Language toggle ── */
+    .lang-toggle {
+      position: fixed;
+      top: 1.4rem;
+      right: 2rem;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      gap: 0;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      animation: fadeDown 0.8s ease both;
+    }
+
+    .lang-btn {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+      padding: 0.5rem 0.9rem;
+      background: transparent;
+      color: var(--text-dim);
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .lang-btn.active {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    .lang-btn:not(.active):hover {
+      background: var(--surface);
+      color: var(--text);
+    }
+
+    /* ── Header ── */
+    header {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(var(--text-faint) 1px, transparent 1px),
+        linear-gradient(90deg, var(--text-faint) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: 0.15;
+      mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, black 20%, transparent 100%);
+    }
+
+    .hero-content { position: relative; z-index: 1; }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.3em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 1.6rem;
+      animation: fadeUp 0.8s 0.1s ease both;
+    }
+
+    h1 {
+      font-family: var(--font-title);
+      font-size: clamp(1.8rem, 5.5vw, 4rem);
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      line-height: 1.05;
+      color: #fff;
+      animation: fadeUp 0.8s 0.25s ease both;
+    }
+
+    h1 em {
+      display: block;
+      font-family: var(--font-body);
+      font-style: italic;
+      font-weight: 300;
+      font-size: 0.55em;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin-top: 0.5rem;
+    }
+
+    .hero-desc {
+      margin-top: 2rem;
+      max-width: 480px;
+      font-size: 1.2rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--text-dim);
+      line-height: 1.65;
+      animation: fadeUp 0.8s 0.4s ease both;
+    }
+
+    .scroll-hint {
+      margin-top: 4rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      animation: fadeUp 0.8s 0.6s ease both;
+    }
+    .scroll-hint::before {
+      content: '';
+      display: block;
+      width: 36px; height: 1px;
+      background: var(--gold);
+    }
+    .scroll-hint span {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      color: var(--text-dim);
+    }
+
+    /* ── Divider ── */
+    .divider {
+      width: 100%; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border) 30%, var(--border) 70%, transparent);
+    }
+
+    /* ── Section ── */
+    .section { padding: 5rem 0; }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.28em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 2.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .section-label::before {
+      content: '';
+      width: 22px; height: 1px;
+      background: var(--gold);
+    }
+
+    /* ── Links ── */
+    .links-stack { display: flex; flex-direction: column; }
+
+    .link-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border);
+      text-decoration: none;
+      color: var(--text);
+      transition: padding-left 0.25s, color 0.25s;
+      gap: 1rem;
+    }
+    .link-row:first-child { border-top: 1px solid var(--border); }
+    .link-row:hover { padding-left: 0.6rem; color: #fff; }
+
+    .link-row-left {
+      display: flex;
+      align-items: center;
+      gap: 1.4rem;
+    }
+
+    .link-icon {
+      width: 38px; height: 38px;
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.05em;
+      color: var(--accent);
+      flex-shrink: 0;
+      transition: border-color 0.25s, background 0.25s;
+    }
+    .link-row:hover .link-icon {
+      border-color: var(--accent-dim);
+      background: var(--surface);
+    }
+
+    .link-label {
+      font-family: var(--font-title);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      color: #fff;
+    }
+    .link-value {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.06em;
+      color: var(--text-dim);
+      margin-top: 0.15rem;
+    }
+
+    .link-arrow {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--accent-dim);
+      flex-shrink: 0;
+      transition: color 0.25s, transform 0.25s;
+    }
+    .link-row:hover .link-arrow { color: var(--accent); transform: translateX(4px); }
+
+    /* ── Resume card ── */
+    .resume-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .resume-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: linear-gradient(to bottom, var(--gold), var(--accent));
+    }
+
+    .resume-top {
+      padding: 2rem 2rem 1.6rem 2.4rem;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .resume-name {
+      font-family: var(--font-title);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: #fff;
+      margin-bottom: 0.3rem;
+    }
+    .resume-tagline {
+      font-family: var(--font-mono);
+      font-size: 0.63rem;
+      letter-spacing: 0.13em;
+      color: var(--text-dim);
+    }
+
+    .btn-download {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.75rem 1.6rem;
+      background: var(--accent);
+      border: 1px solid var(--accent);
+      color: var(--bg);
+      transition: background 0.2s, border-color 0.2s;
+      white-space: nowrap;
+      cursor: pointer;
+      display: inline-block;
+    }
+    .btn-download:hover { background: #9bb8d8; border-color: #9bb8d8; }
+
+    .resume-body {
+      padding: 1.8rem 2rem 1.8rem 2.4rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .resume-block-title {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .resume-entries { display: flex; flex-direction: column; gap: 1.3rem; }
+
+    .resume-entry-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .resume-entry-title {
+      font-family: var(--font-body);
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .resume-entry-date {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      color: var(--text-dim);
+      white-space: nowrap;
+    }
+    .resume-entry-sub {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-top: 0.1rem;
+    }
+    .resume-entry-desc {
+      font-size: 1rem;
+      color: var(--text-dim);
+      margin-top: 0.4rem;
+      line-height: 1.55;
+    }
+
+    .resume-note {
+      padding: 1rem 2rem 1.2rem 2.4rem;
+      border-top: 1px solid var(--border);
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      color: var(--text-faint);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .resume-note::before { content: '⚑'; color: var(--gold); }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .footer-copy {
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.15em;
+      color: var(--text-dim);
+    }
+    .footer-tag {
+      font-family: var(--font-mono);
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      color: var(--text-faint);
+    }
+
+    /* ── Animations ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0; transform: translateY(18px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* Language transition */
+    [data-fr], [data-en] { transition: opacity 0.2s ease; }
+
+    @media (max-width: 600px) {
+      .page { padding: 0 1.2rem; }
+      h1 { font-size: 1.7rem; }
+      .resume-top { flex-direction: column; }
+      .btn-download { width: 100%; text-align: center; }
+      .lang-toggle { right: 1.2rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── Language Toggle ── -->
+  <div class="lang-toggle">
+    <button class="lang-btn active" id="btn-fr" onclick="setLang('fr')">FR</button>
+    <button class="lang-btn" id="btn-en" onclick="setLang('en')">EN</button>
+  </div>
+
+  <!-- ── Hero ── -->
+  <header>
+    <div class="hero-grid"></div>
+    <div class="hero-content">
+      <p class="eyebrow">
+        <span data-fr>Site Personnel</span>
+        <span data-en style="display:none">Personal Website</span>
+      </p>
+      <h1>
+        <span data-fr>Bienvenue sur le<br>Site d'Anis F.</span>
+        <span data-en style="display:none">Welcome to<br>Anis F. Website</span>
+        <em>
+          <span data-fr>Heureux de vous accueillir.</span>
+          <span data-en style="display:none">Glad you're here.</span>
+        </em>
+      </h1>
+      <p class="hero-desc">
+        <span data-fr>Un espace dédié à mon profil professionnel — retrouvez mes coordonnées et mon CV ci-dessous.</span>
+        <span data-en style="display:none">A focused space for my professional profile — find my contact links and résumé below.</span>
+      </p>
+      <div class="scroll-hint">
+        <span>
+          <span data-fr>Défiler pour explorer</span>
+          <span data-en style="display:none">Scroll to explore</span>
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <div class="divider"></div>
+
+  <!-- ── Links ── -->
+  <section class="section">
+    <p class="section-label reveal">
+      <span data-fr>Contact</span>
+      <span data-en style="display:none">Connect</span>
+    </p>
+    <div class="links-stack reveal">
+
+      <a href="https://linkedin.com/in/YOUR-LINKEDIN-HERE" target="_blank" class="link-row">
+        <div class="link-row-left">
+          <div class="link-icon">in</div>
+          <div>
+            <div class="link-label">LinkedIn</div>
+            <!-- ✏️ Replace with your LinkedIn URL -->
+            <div class="link-value">linkedin.com/in/votre-profil</div>
+          </div>
+        </div>
+        <div class="link-arrow">↗</div>
+      </a>
+
+      <a href="mailto:votre@email.com" class="link-row">
+        <div class="link-row-left">
+          <div class="link-icon">@</div>
+          <div>
+            <div class="link-label">
+              <span data-fr>Courriel</span>
+              <span data-en style="display:none">Email</span>
+            </div>
+            <!-- ✏️ Replace with your email -->
+            <div class="link-value">votre@email.com</div>
+          </div>
+        </div>
+        <div class="link-arrow">↗</div>
+      </a>
+
+      <a href="https://github.com/AnisF9" target="_blank" class="link-row">
+        <div class="link-row-left">
+          <div class="link-icon">gh</div>
+          <div>
+            <div class="link-label">GitHub</div>
+            <div class="link-value">github.com/AnisF9</div>
+          </div>
+        </div>
+        <div class="link-arrow">↗</div>
+      </a>
+
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── Resume ── -->
+  <section class="section">
+    <p class="section-label reveal">
+      <span data-fr>Curriculum Vitæ</span>
+      <span data-en style="display:none">Résumé</span>
+    </p>
+    <div class="resume-card reveal">
+
+      <div class="resume-top">
+        <div>
+          <div class="resume-name">Anis F.</div>
+          <!-- ✏️ Replace with your title/field -->
+          <div class="resume-tagline">
+            <span data-fr>// Votre titre · Ville, Province</span>
+            <span data-en style="display:none">// Your Title · City, Province</span>
+          </div>
+        </div>
+        <!-- ✏️ Upload your PDF as "resume.pdf" to the repo root -->
+        <a href="resume.pdf" download class="btn-download">
+          <span data-fr>↓ Télécharger PDF</span>
+          <span data-en style="display:none">↓ Download PDF</span>
+        </a>
+      </div>
+
+      <div class="resume-body">
+
+        <!-- EXPERIENCE -->
+        <div class="resume-block">
+          <div class="resume-block-title">
+            <span data-fr>Expérience</span>
+            <span data-en style="display:none">Experience</span>
+          </div>
+          <div class="resume-entries">
+
+            <div class="resume-entry">
+              <div class="resume-entry-head">
+                <!-- ✏️ Replace with your job title & company -->
+                <div class="resume-entry-title">
+                  <span data-fr>Titre du Poste — Nom de l'Entreprise</span>
+                  <span data-en style="display:none">Job Title — Company Name</span>
+                </div>
+                <div class="resume-entry-date">2023 — <span data-fr>Présent</span><span data-en style="display:none">Present</span></div>
+              </div>
+              <div class="resume-entry-sub">
+                <span data-fr>Ville, Province / Télétravail</span>
+                <span data-en style="display:none">City, Province / Remote</span>
+              </div>
+              <div class="resume-entry-desc">
+                <span data-fr>Brève description de votre rôle et de vos responsabilités. Qu'avez-vous construit, dirigé ou amélioré ?</span>
+                <span data-en style="display:none">Brief description of your role and responsibilities. What did you build, lead, or improve?</span>
+              </div>
+            </div>
+
+            <div class="resume-entry">
+              <div class="resume-entry-head">
+                <div class="resume-entry-title">
+                  <span data-fr>Rôle Précédent — Entreprise Précédente</span>
+                  <span data-en style="display:none">Previous Role — Previous Company</span>
+                </div>
+                <div class="resume-entry-date">2021 — 2023</div>
+              </div>
+              <div class="resume-entry-sub">
+                <span data-fr>Ville, Province</span>
+                <span data-en style="display:none">City, Province</span>
+              </div>
+              <div class="resume-entry-desc">
+                <span data-fr>Un bref résumé de votre rôle précédent. Deux à trois phrases suffisent.</span>
+                <span data-en style="display:none">A short summary of your previous role. Two to three sentences is ideal.</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- EDUCATION -->
+        <div class="resume-block">
+          <div class="resume-block-title">
+            <span data-fr>Éducation</span>
+            <span data-en style="display:none">Education</span>
+          </div>
+          <div class="resume-entries">
+
+            <div class="resume-entry">
+              <div class="resume-entry-head">
+                <!-- ✏️ Replace with your degree & school -->
+                <div class="resume-entry-title">
+                  <span data-fr>Diplôme — Nom de l'Université</span>
+                  <span data-en style="display:none">Degree — University Name</span>
+                </div>
+                <div class="resume-entry-date">2017 — 2021</div>
+              </div>
+              <div class="resume-entry-sub">
+                <span data-fr>Domaine d'études</span>
+                <span data-en style="display:none">Field of Study</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <div class="resume-note">
+        <span data-fr>Remplacez les espaces réservés ci-dessus par vos vraies informations. Téléversez votre PDF sous "resume.pdf" à la racine du dépôt.</span>
+        <span data-en style="display:none">Replace the placeholders above with your real info. Upload your PDF as "resume.pdf" to the repo root for the download button to work.</span>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── Footer ── -->
+  <footer>
+    <p class="footer-copy">
+      © 2026 Anis F. —
+      <span data-fr>Tous droits réservés.</span>
+      <span data-en style="display:none">All rights reserved.</span>
+    </p>
+    <p class="footer-tag">
+      <span data-fr>Hébergé sur GitHub Pages</span>
+      <span data-en style="display:none">Hosted on GitHub Pages</span>
+    </p>
+  </footer>
+
+</div>
+
+<script>
+  // ── Scroll reveal ──
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 100);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // ── Language toggle ──
+  let currentLang = 'fr';
+
+  function setLang(lang) {
+    if (lang === currentLang) return;
+    currentLang = lang;
+
+    document.documentElement.lang = lang;
+
+    // Toggle button styles
+    document.getElementById('btn-fr').classList.toggle('active', lang === 'fr');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+
+    // Show/hide all translated spans
+    document.querySelectorAll('[data-fr]').forEach(el => {
+      el.style.display = lang === 'fr' ? '' : 'none';
+    });
+    document.querySelectorAll('[data-en]').forEach(el => {
+      el.style.display = lang === 'en' ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>
